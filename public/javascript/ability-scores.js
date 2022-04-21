@@ -1,57 +1,55 @@
-// global variables
-    // array of ability objects to be called from event handlers
-const abilitiesArr = [  
-    {name: 'STR'},
-    {name: 'DEX'},
-    {name: 'CON'},
-    {name: 'INT'},
-    {name: 'WIS'},
-    {name: 'CHA'}
-];
-    // save ability bonuses from D&D api to be called from event handlers
-const raceInfo = [];
-
-// ability bonuses retrieved from api based on race, and calculating ability scores and modifiers factoring in these bonuses
-// const ability_scores = abilityScoresGet(raceInfo.ability_bonuses);
-
 // Retrieve selected race ability bonus info
 const retrieveRaceBonus = async function (raceName) {
-    const apiUrl = `https://www.dnd5eapi.co/api/races/${raceName.toLowerCase()}`;
+    const apiUrl = `https://www.dnd5eapi.co/api/races/${raceName.toLowerCase()}`
     
     const response = await fetch(apiUrl);
     if (response.ok) {
         const raceData = await response.json();
-    
-        return raceInfo.push(raceData.ability_bonuses);
+        return raceData.ability_bonuses;
     }
 };
 
-// Creates an array of ability objects, loops through this array and adds base scores and modifiers to each. Then loops through array of ability bonuses (based on character race) and adds the bonus to the corresponding ability. Calculations for scores and modifiers below: 
-    // Calculate score
-        // Yields number between 6 - 18, to simulate rolling 4d6, re-rolling any 1s, and dropping lowest number
-    // Calculate modifier
-        // takes ability score, subtracts 10, divides by 2, rounds up to nearest integer
+// takes in the array of ability scores based on race, and calculates ability scores and modifiers
 const abilityScoresCalc = function (array) {
+
+    // empty abilities object
+    const abilitiesArr = [
+        {name: "STR", score: 0, modifier: 0},
+        {name: "DEX", score: 0, modifier: 0},
+        {name: "CON", score: 0, modifier: 0},
+        {name: "INT", score: 0, modifier: 0},
+        {name: "WIS", score: 0, modifier: 0},
+        {name: "CHA", score: 0, modifier: 0}
+    ];
+
+    // add each of the race bonuses to the abilities array
+    for (let i = 0; i < array.length; i++) {
+
+        let abilityName = array[i].ability_score.name;
+        let abilityScore = array[i].bonus;
+        // find object in array with matching ability name and save bonus score to it
+        abilitiesArr.find(ability => ability.name === abilityName).score = abilityScore
+    }
+
+    // calculate scores and modifiers
     for (let i = 0; i < abilitiesArr.length; i++) {
-        abilitiesArr[i].score = Math.floor((Math.random() * 12) + 6);
+
+    // if there is an existing ability bonus, add caculated score to it, otherwise just calculate a score: 
+        // yields number between 6 - 18, to simulate rolling 4d6, re-rolling any 1s,and dropping lowest number
+        if (abilitiesArr[i].score) {
+            abilitiesArr[i].score += Math.floor((Math.random() * 12) + 6);
+        } else {
+            abilitiesArr[i].score = Math.floor((Math.random() * 12) + 6);
+        }
+        // takes ability score, subtracts 10, divides by 2, rounds up to nearestinteger
         abilitiesArr[i].modifier = Math.ceil((abilitiesArr[i].score - 10) / 2);
     }
 
-    // for (let i = 0; i < array.length; i++) {
-    //     let abilityName = array[i].ability_score.name
-    //     let abilityScore = array[i].bonus
-    //     for (let j = 0; j < abilitiesArr.length; j++) {
-    //         if (abilityName === abilitiesArr[j].name) {
-    //             abilitiesArr[j].score += abilityScore;
-    //             abilitiesArr[j].modifier = Math.ceil((abilitiesArr[i].score - 10) / 2);
-    //         }
-    //     }
-    // }
-    console.log(raceInfo)
-    console.log(abilitiesArr);
+    // return the array with new calculated scores -including bonuses- and modifiers
     return abilitiesArr;
 }
 
+// TODO: Need to verify this still works, as only tested the calculations so far
 // send post requests
 async function postAbilityScores (heroID, name, score, modifier) {
     const response = await fetch('../api/abilities', {
@@ -73,25 +71,28 @@ async function postAbilityScores (heroID, name, score, modifier) {
     alert(response.statusText);
     }
 }
-
+    
 async function createAbilityScores () {
-    // grab race name from form, retrieve race bonuses info from DnD api and calculate scores and modifiers, save as object
-    // grab character id from url
+
     const race = document.querySelector('#race').value;
     const race_bonuses = await retrieveRaceBonus(race);
-    const abilities = abilityScoresCalc(race_bonuses.ability_bonuses);
-    const hero_id = window.location.toString().split("/")[
-        window.location.toString().split("/").length - 1
-    ];
+    const abilities = abilityScoresCalc(race_bonuses);
+    console.log(abilities);
 
-    // loop through each of the objects in abilities array and send info to postAbilityScores to send post request
-    for (let i = 0; i < abilities.length; i++) {
-        const name = abilities[i].name;
-        const score = abilities[i].score;
-        const modifier = abilities[i].modifier;
-        console.log(name, score, modifier)
+    // TODO: Need to verify this still works, as only tested the calculations so far
+    // const hero_id = window.location.toString().split("/")[
+    //     window.location.toString().split("/").length - 1
+    // ];
+
+    // loop through each of the objects in abilities array and send info topostAbilityScores to send post request
+    // for (let i = 0; i < abilities.length; i++) {
+    //     const name = abilities[i].name;
+    //     const score = abilities[i].score;
+    //     const modifier = abilities[i].modifier;
+    //     console.log(name, score, modifier)
         // postAbilityScores(hero_id, name, score, modifier);
-    }
+    // }
 };
 
-document.querySelector("#calcScores").addEventListener("click", createAbilityScores);
+//TODO: Need to add calc scores button again!
+document.querySelector("#calcScores").addEventListener("click",createAbilityScores);
