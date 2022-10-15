@@ -1,8 +1,7 @@
 _ARCHIVE
 node_modules
 package-lock.json
-.vscode
+
 .DS_Store
 _ARCHIVE
 .env
-*.code-workspace
