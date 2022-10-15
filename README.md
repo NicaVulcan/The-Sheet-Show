@@ -22,16 +22,27 @@ Sheet Show is a Web App designed to expedite character creation for Dungeons and
 
 - :ballot_box_with_check: **Alpha Release** | MVP Proof of Concept
   > 2021-02-22 | Group completed fully functional proof of concept.
-  - Users can create an account and log in.
-  - Users have CRUD access to created characters.
-  - Users can view a Characters DnD Character Sheet.
+  - Users
+    - Users can create an account and log in.
+  - Characters
+    - Users can create a character and save it to the database.
+    - Users have CRUD access to created characters.
+  - Character Sheet
+    - Users can view a Characters DnD Character Sheet.
+  - User Profile
+    - Users can view their profile page.
+    - Users can view their characters on their profile page.
+  - Homepage
+    - Homepage displays all characters in the database.
 - :white_medium_square: **Beta Release** - Polished Release Ready for User Base
   > NOTE: A beta release of this application may never happen. This project was something we did as a group to learn more about related technologies and get experience working as a team. We may continue to work on this project in the future, but it is not a priority.
   - Users can only edit their own characters.
-  - Users can update and save changes on a Character Sheet.
-  - Users can Print a Character Sheet.
   - Users have a way to create notes and save them to a character.
-  - Homepage shows a running log of character updates.
+  - Character Sheets
+    - Users can update and save changes on a Character Sheet.
+    - Users can print a Character Sheet.
+  - Homepage
+    - Homepage shows a running log of character updates.
 
 ---
 
