@@ -3,6 +3,10 @@
 A concept DnD Character Creator Web App Built on MySQL, Node, Express, and Handlebars.
 > Click here to see live demo: https://sheetshow.erikplachta.com
 
+---
+
+---
+
 ## User Story
 
 Sheet Show is a Web App designed to expedite character creation for Dungeons and Dragons 5th Edition. The app allows users to create a character, save it to a database, and then view it on a character sheet. The character sheet is a dynamic page that is generated based on the user's input. The user can then edit the character and save the changes to the database. The user can also delete the character from the database.
@@ -11,12 +15,20 @@ Sheet Show is a Web App designed to expedite character creation for Dungeons and
 - WHEN user creates an account, THEN user is redirected to the home-page logged in.
 - WHEN user is logged in, THEN they have CRUD access to their own characters.
 
+---
+
+---
+
 ## Authors
 
 - [Christiana Morales](https://github.com/NicaVulcan)
 - [Connie Barrantes](https://github.com/barrantesc)
 - [Erik Plachta](https://github.com/erikplachta)
 - [Mary Margaret Lawton](https://github.com/mmlawton15)
+
+---
+
+---
 
 ## Milestones
 
@@ -44,9 +56,14 @@ Sheet Show is a Web App designed to expedite character creation for Dungeons and
   - Homepage
     - Homepage shows a running log of character updates.
 
+
+---
+
 ---
 
 ## Application Overview
+
+---
 
 ### Homepage
 
@@ -54,22 +71,33 @@ This page is public and the content is universal to guests and users. It display
 
 <img src='./public/readme/homepage.gif' width="600" />
 
+---
+
+### Navigation, Login, and Logout
+
+Demonstrating the navigation experience for users.
+> NOTE: The Login Page in the gif is out-of-date as now the login and sign-up page are unique. If application development continues it will be updated.
+
+<img src='./public/readme/nav-login-logout.gif' width="600" />
+
+---
+
 ### Viewing My Characters
 
 If signed in, a User can click on My Characters to view their characters. Similiar to the homepage, users can select a Character to view the Character Sheet.
 
 <img src='./public/readme/my-heros-character-sheet-profile-sheet.gif' width="600" />
 
-### Character Creator
+<!-- ### Character Creator
 
  Create a new Character via the Character Creator page. All created characters
  for all users are displayed on the home page. Character Sheets can be deleted,
  updated, and viewed by signed in users.
 > NOTE: At this time ALL users can edit all characters. 
 
-<img src='./CharacterCreator.png' width="600" />
+<img src='./CharacterCreator.png' width="600" /> -->
 
-### Characters
+<!-- ### Characters
 
 > Viewing 
 
@@ -81,7 +109,7 @@ If signed in, a User can click on My Characters to view their characters. Simili
 
 > Once logged in, you can navigate to https://sheetshow.erikplachta.com/character-sheet to view a blank character sheet.
 
-<img src='./Sheet.png' width="600" />
+<img src='./Sheet.png' width="600" /> -->
 
 ---
 
@@ -102,6 +130,8 @@ A list of all technologies used within the project:
 - Node.js
 - Restful API
 - Sequelize
+
+---
 
 ## MIT License
 

@@ -1,5 +1,6 @@
 // Retrieve selected race info
 const retrieveRaceInfo = async function (raceName) {
+    //TODO:: 10152022 #EP || Add timeout
     const apiUrl = `https://www.dnd5eapi.co/api/races/${raceName}`;
 
     const response = await fetch(apiUrl);
@@ -17,16 +18,19 @@ const retrieveRaceInfo = async function (raceName) {
 };
 
 // Retrieve selected class info
-const retrieveClassInfo = async function (className) {
-    const apiUrl = `https://www.dnd5eapi.co/api/classes/${className}`;
+const retrieveClassInfo = async (className) =>  {
+    console.log("Getting class..")
 
+    //TODO:: 10152022 #EP || Add timeout
+    const apiUrl = `https://www.dnd5eapi.co/api/classes/${className}`;
+    
     const response = await fetch(apiUrl);
     if (response.ok) {
         const classData = await response.json();
         // saving data to object
         const classInfo = {
-            choice_number : classData.proficiency_choices[0].choose,
-            prof_array : classData.proficiency_choices[0].from
+            choice_number   : classData?.proficiency_choices?.[0]?.choose,
+            prof_array      : classData?.proficiency_choices?.[0]?.from?.options
         }
 
         return classInfo;
@@ -35,7 +39,7 @@ const retrieveClassInfo = async function (className) {
 
 // Calculate Proficiency Bonus
     // determined by player level (starting from level 1, the bonus increases by 1every four levels)
-const profBonusCalc = function (playerLevel) {
+const profBonusCalc = async (playerLevel) => {
     let profBonus = Math.ceil(playerLevel/4)+1;
     return profBonus;
 };
@@ -59,21 +63,30 @@ const stringFromArray = function (array) {
     // -- still need to figure out how to remove selected element from arr after pushing to newArr to avoid duplicates, but code breaks with obvious the splice() solution
     // -- replaced for loop with while loop to ensure loop keeps going if not enough valid items have been pushed to the newArr while also making sure items pushed are deleted from the original array to prevent duplicates
 const randomFromArray = function (array, n) {
+    console.log("Reading array value: ", array)
+    return JSON.stringify(array[n]);
+    //TODO:: 10152022 #EP || Fix this so returns more than just the one. It's crashing right now so this is a working to make it work again.
     let arr = [];
     let newArr = [];
-    for (let i = 0; i < array.length; i++) {
-        arr.push(array[i].index);
-    }
-    let i = 0;
-    while (newArr.length < n) {
-        let idx = Math.floor(Math.random() * (array.length));
-        if (arr[idx]) {
-            newArr.push(arr[idx]);
-            arr.splice(idx, 1);
+    try {
+        for (let i = 0; i < array.length; i++) {
+            arr.push(array[i].index);
         }
-        i++
+        let i = 0;
+        while (newArr.length < n) {
+            let idx = Math.floor(Math.random() * (array.length));
+            if (arr[idx]) {
+                newArr.push(arr[idx]);
+                arr.splice(idx, 1);
+            }
+            i++
+        }
     }
+    catch (err){
 
+        console.log("ERROR: ", err)
+    }
+    // console.log("newArr: ", newArr)
     return newArr.join(" ");
 }
 
@@ -91,16 +104,22 @@ async function newCharFormHandler(event) {
     const proficiency_bonus = profBonusCalc(document.querySelector('#char-level').valueAsNumber);
     const image_link = `./assets/images/race_${race}.PNG`;
 
+    //-- API Calls to DnD for character stats
+    //TODO: 10152022 #EP || Review this to identify any other potential useful info
     // info retrieved from api/races based on user input
     const raceInfo = await retrieveRaceInfo(document.querySelector('#char-race').value);
     const alignment = raceInfo.alignment;
     const langString = stringFromArray(raceInfo.languages);
+    // console.log('Got Race')
 
     // info retrieved from api/classes based on user input
+    //TODO:: 10152022 #EP || Fix this, it's not working
     const classInfo = await retrieveClassInfo(document.querySelector('#char-class').value);
     const profString = randomFromArray(classInfo.prof_array, classInfo.choice_number);
+    // console.log('Got Class')
 
-    const response = await fetch('api/heroes', {
+    // console.log("Attempting to Create character")
+    const response = await fetch('/api/heroes', {
         method: 'POST', 
         body: JSON.stringify({
             name,
@@ -119,7 +138,8 @@ async function newCharFormHandler(event) {
             'Content-Type': 'application/json'
         }
     });
-    console.log("Attempting to Create character")
+    
+    
     if (response.ok) {
         document.location.replace('/profile');
     } else {
