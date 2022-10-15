@@ -119,7 +119,7 @@ async function newCharFormHandler(event) {
             'Content-Type': 'application/json'
         }
     });
-
+    console.log("Attempting to Create character")
     if (response.ok) {
         document.location.replace('/profile');
     } else {
