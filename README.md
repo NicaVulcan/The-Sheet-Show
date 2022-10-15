@@ -1,41 +1,83 @@
 # The-Sheet-Show
 
-## What is the point of this app?
-This app was designed to help players create a character by using a list or "sheet" of characteristics, similarly to how popular RPG/simulation games allow you to create a character at the start. When the user has created their character, this character and their information is saved inside a mySQL database and can be accessed again when the user logs into the website.
-The real-world application of this app could be used for a myriad of different game sites, and could be customizable based on the ideas of the developers.
+A concept DnD Character Creator Web App Built on MySQL, Node, Express, and Handlebars.
+> Click here to see live demo: https://sheetshow.erikplachta.com
 
-## How did we build this app?
-Our team (Erik Plachta, Connie Barrantes, Christiana Morales, Mary Margaret Lawton), divvied up the responsibilities based on what our strong suits were. We used the below technologies:
- - Bcrypt
- - Bootstrap
- - Connect-Session-Sequelize
- - Character-Sheet-CSS
- - DnD5e API
- - Dotenv
- - Express
- - Express-Handlebars
- - Express-Session
- - Heroku
- - JawsDB
- - MySQL2
- - Node.js
- - Restful API
- - Sequelize
- 
-1. To start, we built out Handlebars, our models (Hero, User), and controllers. We also verified that everything was working as expected before moving forward.
-2. Next, we worked on bugs we encountered, finishing touches, and improving the overall functionality.
-3. Lastly, we worked on the style, images and closing out the remaining github issues.
+## User Story
 
-## What challenges did we face?
-Our main challenge was working on the different files and connecting them to each other. Thankfully we used class time to get a pulse on where we stood and had steps to complete and move forward before the next class time. Everyone having different strengths and weaknesses was great because for the most part we got to work on things we wanted to, and learn with our group members on things we weren't as strong in.
+Sheet Show is a Web App designed to expedite character creation for Dungeons and Dragons 5th Edition. The app allows users to create a character, save it to a database, and then view it on a character sheet. The character sheet is a dynamic page that is generated based on the user's input. The user can then edit the character and save the changes to the database. The user can also delete the character from the database.
 
-## Where can we use this app?
-You can view the app at the sites below:
-- [Live URL](https://sheet-show.herokuapp.com/) 
-- [Github repo](https://github.com/barrantesc/The-Sheet-Show)
+- WHEN user navigates to website, THEN all existing characters are displayed.
+- WHEN user creates an account, THEN user is redirected to the home-page logged in.
+- WHEN user is logged in, THEN they have CRUD access to their own characters.
 
-## What does it look like?
-![LogIn.png](/LogIn.png)
-![CharacterCreator.png](/CharacterCreator.png)
-![Characters.png](/Characters.png)
-![Sheet.png](/Sheet.png)
+## Authors
+
+- [Christiana Morales](https://github.com/NicaVulcan)
+- [Connie Barrantes](https://github.com/barrantesc)
+- [Erik Plachta](https://github.com/erikplachta)
+- [Mary Margaret Lawton](https://github.com/mmlawton15)
+
+## Milestones
+
+- :ballot_box_with_check: **Alpha Release** | MVP Proof of Concept 
+  > 2021-02-22 | Group completed fully functional proof of concept.
+- :white_medium_square: **Beta Release** - Polished Release Ready for User Base
+  > NOTE: A beta release of this application may never happen. This project was something we did as a group to learn more about related technologies and get experience working as a team. We may continue to work on this project in the future, but it is not a priority.
+
+---
+
+## Application Overview
+
+<!-- ### Login Page
+
+Where users navigate to 
+
+<img src='./LogIn.png' width="600" /> -->
+
+### Character Creator
+
+ Create a new Character via the Character Creator page. All created characters
+ for all users are displayed on the home page. Character Sheets can be deleted,
+ updated, and viewed by signed in users.
+> NOTE: At this time ALL users can edit all characters. 
+
+<img src='./CharacterCreator.png' width="600" />
+
+### Characters
+
+> Viewing 
+
+<img src='./Characters.png' width="600" />
+
+### Character Sheet
+
+> View
+
+> Once logged in, you can navigate to https://sheetshow.erikplachta.com/character-sheet to view a blank character sheet.
+
+<img src='./Sheet.png' width="600" />
+
+---
+
+## Technologies
+
+A list of all technologies used within the project:
+
+- Bcrypt
+- Bootstrap
+- Connect-Session-Sequelize
+- Character-Sheet-CSS
+- DnD5e API
+- Dotenv
+- Express
+- Express-Handlebars
+- Express-Session
+- MySQL2
+- Node.js
+- Restful API
+- Sequelize
+
+## MIT License
+
+[MIT License](./LICENSE)
