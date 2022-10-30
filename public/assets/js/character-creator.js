@@ -56,41 +56,29 @@ const stringFromArray = function (array) {
     return arr.join(", ");
 }
 
-// choose x amount of random element from array - for choosing allowed # of proficiencies, and turning to string
-    // takes array of objects, retrieves index property from each and pushes it to a new array
-    // selects a random element from array x number of times, pushes each to a different new array
-    // joins the randomly selected elements into a string
-    // -- still need to figure out how to remove selected element from arr after pushing to newArr to avoid duplicates, but code breaks with obvious the splice() solution
-    // -- replaced for loop with while loop to ensure loop keeps going if not enough valid items have been pushed to the newArr while also making sure items pushed are deleted from the original array to prevent duplicates
-const randomFromArray = function (array, n) {
-    console.log("Reading array value: ", array)
+
+const get_nRandomProficiencies = function (array, n) {
+    /** Provide an array of objects, and N proficiencies to get string of all profs.
+     * 
+     * @param {array} array - array of proficiencies as objects
+     * @param {number} n - number of proficiencies to return
+     * 
+     * @returns {string} - string of proficiencies
+     */
     
-    return ((array[n]?.item?.name).replace("Skill: ",""));
-    //TODO:: 10152022 #EP || Fix this so returns more than just the one. It's crashing right now so this is a working to make it work again.
-    let arr = [];
-    let newArr = [];
+    let proficiencies = [];
     try {
-        for (let i = 0; i < array.length; i++) {
-            arr.push(array[i].index);
-        }
-        let i = 0;
-        while (newArr.length < n) {
-            let idx = Math.floor(Math.random() * (array.length));
-            if (arr[idx]) {
-                newArr.push(arr[idx]?.item?.name);
-                arr.splice(idx, 1);
+        //-- Build array that will be converted to string with N results
+        array.map((proficiency) => {
+            if(proficiencies.length < n) {
+                arr.push(proficiency.item.name);
             }
-            i++
-        }
+        })
     }
     catch (err){
-
-        console.log("ERROR: ", err)
+        console.log("Unable to extract proficiency names from array. See Error: ", err)
     }
-    
-    return(array[n]);
-    // console.log("newArr: ", newArr)
-    return newArr.join(" ");
+    return proficiencies.join(" ");
 }
 
 // take user input from character creator form to turn into object to generate a character and save to database
@@ -118,7 +106,7 @@ async function newCharFormHandler(event) {
     // info retrieved from api/classes based on user input
     //TODO:: 10152022 #EP || Fix this, it's not working
     const classInfo = await retrieveClassInfo(document.querySelector('#char-class').value);
-    const profString = randomFromArray(classInfo.prof_array, classInfo.choice_number);
+    const profString = get_nRandomProficiencies(classInfo.prof_array, classInfo.choice_number);
     console.log('Got Class')
     console.log("profString: ", profString)
 
