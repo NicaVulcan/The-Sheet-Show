@@ -107,8 +107,8 @@ async function newCharFormHandler(event) {
     //TODO:: 10152022 #EP || Fix this, it's not working
     const classInfo = await retrieveClassInfo(document.querySelector('#char-class').value);
     const profString = get_nRandomProficiencies(classInfo.prof_array, classInfo.choice_number);
-    console.log('Got Class')
-    console.log("profString: ", profString)
+    // console.log('Got Class')
+    // console.log("profString: ", profString)
 
     // console.log("Attempting to Create character")
     const response = await fetch('/api/heroes', {
