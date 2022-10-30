@@ -15,7 +15,8 @@ const loginFormHandler = async (event) => {
       // alert('Login Success.');
       document.location.replace('/');
     } else {
-      alert('Failed to log in.');
+      // console.log(response)
+      alert('Failed to log in. Please check username, password and try again.');
     }
   }
 };
