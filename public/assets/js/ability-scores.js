@@ -34,14 +34,14 @@ const abilityScoresCalc = function (array) {
     // calculate scores and modifiers
     for (let i = 0; i < abilitiesArr.length; i++) {
 
-    // if there is an existing ability bonus, add caculated score to it, otherwise just calculate a score: 
+    // if there is an existing ability bonus, add calculated score to it, otherwise just calculate a score: 
         // yields number between 6 - 18, to simulate rolling 4d6, re-rolling any 1s,and dropping lowest number
         if (abilitiesArr[i].score) {
             abilitiesArr[i].score += Math.floor((Math.random() * 12) + 6);
         } else {
             abilitiesArr[i].score = Math.floor((Math.random() * 12) + 6);
         }
-        // takes ability score, subtracts 10, divides by 2, rounds up to nearestinteger
+        // takes ability score, subtracts 10, divides by 2, rounds up to nearest integer
         abilitiesArr[i].modifier = Math.ceil((abilitiesArr[i].score - 10) / 2);
     }
 
@@ -64,34 +64,51 @@ async function postAbilityScores (heroID, name, score, modifier) {
             'Content-Type': 'application/json'
         }
     })
-    if (response.ok) {
-        console.log("yay")
-    document.location.reload();
-    } else {
-    alert(response.statusText);
-    }
+    
+    //-- API Response SUCCESS
+    if      (response.ok) document.location.reload();
+    
+    //-- API Response FAIL
+    else    alert(response.statusText);
 }
     
 async function createAbilityScores () {
+    /** Manage calculating abilities scores when user clicks "Calculate" button.
+     * 
+     * 1. Retrieve
+     * 2. Calculate
+     * 3. Get Hero ID
+     * 4. Post
+     */
 
+    //  1. Retrieve user input
     const race = document.querySelector('#race').value;
     const race_bonuses = await retrieveRaceBonus(race);
+    
+    //-- 2. Calculate ability scores
     const abilities = abilityScoresCalc(race_bonuses);
-    console.log(abilities);
+    
+    //-- 3. Get Hero ID from URL
+    const hero_id = window.location.toString()
+        .split("/")[window.location.toString().split("/").length - 1];
 
-    // TODO: Need to verify this still works, as only tested the calculations so far
-    // const hero_id = window.location.toString().split("/")[
-    //     window.location.toString().split("/").length - 1
-    // ];
+    //-- 4. Post
+    abilities.map(ability => {
+        try{
 
-    // loop through each of the objects in abilities array and send info topostAbilityScores to send post request
-    // for (let i = 0; i < abilities.length; i++) {
-    //     const name = abilities[i].name;
-    //     const score = abilities[i].score;
-    //     const modifier = abilities[i].modifier;
-    //     console.log(name, score, modifier)
-        // postAbilityScores(hero_id, name, score, modifier);
-    // }
+            // Deconstruct
+            const name      = ability.name;
+            const score     = ability.score;
+            const modifier  = ability.modifier;
+            
+            // Post to api
+            postAbilityScores(hero_id, name, score, modifier);
+        }
+        catch(err){
+            console.error(err);
+        }
+    });
+    // console.log("createAbilityScores(): Post complete")
 };
 
 //TODO: Need to add calc scores button again!
