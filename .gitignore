@@ -4,4 +4,5 @@ package-lock.json
 
 .DS_Store
 _ARCHIVE
+_thunder-client
 .env
