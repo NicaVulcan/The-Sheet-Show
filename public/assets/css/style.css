@@ -1,7 +1,9 @@
-/* 
-    ROOT VALUES ----------------------------------------------------------------
- */
+/* ROOT VALUES ---------------------------------------------------------------*/
 
+@import url('./animations.css');
+@import url('./login.css');
+@import url('./character-sheet-template.css');
+@import url('./hero-card.css');
  :root {
   
     /*
