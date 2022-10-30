@@ -85,6 +85,11 @@ router.get('/:id', (req, res) => {
 
 // create hero
 router.post('/', withAuth, (req, res) => {
+    /** CharacterCreator.js sends in payload from user input and D&D API 
+     * to create a hero.
+     * 
+     * public/assets/js/character-creator.js
+     */
     Hero.create({
         user_id: req.session.user_id,
         name: req.body.name,

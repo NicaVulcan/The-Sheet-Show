@@ -19,7 +19,7 @@ const retrieveRaceInfo = async function (raceName) {
 
 // Retrieve selected class info
 const retrieveClassInfo = async (className) =>  {
-    console.log("Getting class..")
+    // console.log("Getting class..")
 
     //TODO:: 10152022 #EP || Add timeout
     const apiUrl = `https://www.dnd5eapi.co/api/classes/${className}`;
@@ -64,7 +64,8 @@ const stringFromArray = function (array) {
     // -- replaced for loop with while loop to ensure loop keeps going if not enough valid items have been pushed to the newArr while also making sure items pushed are deleted from the original array to prevent duplicates
 const randomFromArray = function (array, n) {
     console.log("Reading array value: ", array)
-    return JSON.stringify(array[n]);
+    
+    return ((array[n]?.item?.name).replace("Skill: ",""));
     //TODO:: 10152022 #EP || Fix this so returns more than just the one. It's crashing right now so this is a working to make it work again.
     let arr = [];
     let newArr = [];
@@ -76,7 +77,7 @@ const randomFromArray = function (array, n) {
         while (newArr.length < n) {
             let idx = Math.floor(Math.random() * (array.length));
             if (arr[idx]) {
-                newArr.push(arr[idx]);
+                newArr.push(arr[idx]?.item?.name);
                 arr.splice(idx, 1);
             }
             i++
@@ -86,6 +87,8 @@ const randomFromArray = function (array, n) {
 
         console.log("ERROR: ", err)
     }
+    
+    return(array[n]);
     // console.log("newArr: ", newArr)
     return newArr.join(" ");
 }
@@ -101,7 +104,7 @@ async function newCharFormHandler(event) {
     const gender = document.querySelector('#char-gender').value;
     const age = document.querySelector('#char-age').valueAsNumber;
     const player_level = document.querySelector('#char-level').valueAsNumber;
-    const proficiency_bonus = profBonusCalc(document.querySelector('#char-level').valueAsNumber);
+    const proficiency_bonus = profBonusCalc(player_level).valueAsNumber;
     const image_link = `./assets/images/race_${race}.PNG`;
 
     //-- API Calls to DnD for character stats
@@ -116,7 +119,8 @@ async function newCharFormHandler(event) {
     //TODO:: 10152022 #EP || Fix this, it's not working
     const classInfo = await retrieveClassInfo(document.querySelector('#char-class').value);
     const profString = randomFromArray(classInfo.prof_array, classInfo.choice_number);
-    // console.log('Got Class')
+    console.log('Got Class')
+    console.log("profString: ", profString)
 
     // console.log("Attempting to Create character")
     const response = await fetch('/api/heroes', {
