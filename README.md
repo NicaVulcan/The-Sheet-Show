@@ -1,7 +1,11 @@
 # The-Sheet-Show
 
 A concept DnD Character Creator Web App Built on MySQL, Node, Express, and Handlebars.
-> Click here to see live demo: https://sheetshow.erikplachta.com
+
+
+## The Website is no longer live
+
+I’ve taken this app down as I have no plans to further develop on it. 
 
 ---
 
