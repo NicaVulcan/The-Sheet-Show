@@ -1,4 +1,5 @@
-<link rel="stylesheet" href="/css/character-sheet-template.css">
+<link rel="stylesheet" href="./assets/css/character-sheet-template.css">
+
 
 {{!-- only create button for score calculator if they have not been calculated yet --}}
 <style>
@@ -435,15 +436,12 @@
 </form>
 
 {{!-- Ability to edit char sheet manually --}}
-<<<<<<< HEAD
-<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-<script src="/javascript/character-sheet-template.js"></script>
-=======
+<script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
+{{!-- <script src="./assets/js/character-sheet-template.js"></script> --}}
 {{!--
 <script src="./js/character-sheet-template.js"></script> --}}
 
 {{!-- only load js for score calculator if they have not been calculated yet --}}
 {{#unless abilities.length}}
-<script src="/javascript/ability-scores.js"></script>
+<script src="../assets/js/ability-scores.js"></script>
 {{/unless}}
->>>>>>> develop
